@@ -1,0 +1,22 @@
+{
+  "name": "nexacart",
+  "private": true,
+  "version": "1.0.0",
+  "description": "MERN e-commerce: catalog, cart, Stripe test checkout, orders and an admin dashboard.",
+  "license": "MIT",
+  "author": "Waleed Ilyas",
+  "packageManager": "pnpm@12.8.1",
+  "scripts": {
+    "dev": "pnpm --parallel --filter ./server --filter ./client dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "seed": "pnpm --filter ./server seed",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
