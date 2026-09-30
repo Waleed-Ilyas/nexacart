@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import request from "supertest";
 import { describe, expect, it } from "vitest";
+import { User } from "../src/models/User";
 import { TEST_ENV, api, bearer, signUp, useTestApp } from "./helpers";
 
 const t = useTestApp();
@@ -102,7 +103,6 @@ describe("refresh tokens", () => {
     const { cookie, user } = await signUp(t.app, "many@example.com");
     void cookie;
     for (let i = 0; i < 7; i++) await request(t.app).post("/api/auth/login").send({ email: "many@example.com", password: "Passw0rd!" });
-    const { User } = await import("../src/models/User");
     const doc = await User.findById(user.id).select("+refreshTokens");
     expect(doc!.refreshTokens.length).toBe(5);
   });

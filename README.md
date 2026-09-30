@@ -9,9 +9,11 @@
 
 A demo store with a catalogue, filters, cart, Stripe checkout, order history and an admin dashboard with sales charts. **Personal project.** Payments run in Stripe **test mode**, so no real money moves, and the products are fictional.
 
-**Live demo:** CLIENT_URL
+**Live demo:** https://nexacart-one.vercel.app (API: https://nexacart-api-lake.vercel.app/api/health)
 
 ![NexaCart storefront](docs/home.png)
+
+![Admin dashboard](docs/admin.png)
 
 ## Demo accounts
 
@@ -74,7 +76,7 @@ pnpm lint && pnpm typecheck
 
 - **Server (48 tests):** every endpoint through real HTTP against a real MongoDB (an in-memory one by default, or set `TEST_MONGODB_URI`). Stripe and Cloudinary are replaced with fakes, so nothing touches the network. They cover the auth flow and refresh rotation, forged and expired tokens, role enforcement on every admin route, server-side pricing that ignores client prices, stock limits, webhook signature checks, idempotent payment confirmation, stock never going negative, and admin order transitions.
 - **Client (24 tests):** cart logic and persistence (including corrupt storage), exact money conversion, route guards, product card behaviour.
-- **End to end:** a Playwright run (not part of CI) that goes through the real site: filters, cart, a real Stripe test payment on the hosted page, order history, admin charts, product create and edit with a real Cloudinary upload, deleting it, and shipping an order.
+- **End to end:** a Playwright run (not part of CI) that goes through the real site. It was run against the live deployment: filters, cart, a real Stripe test payment on the hosted page, order history, admin charts, a refused product write on the read-only demo admin, and shipping an order. That run confirmed the payment through the **webhook** (the order records `paidVia: webhook`). Product create, edit and delete with a real Cloudinary upload were checked in the same run against a local server, because the live demo blocks product writes.
 
 ## Key engineering decisions
 
